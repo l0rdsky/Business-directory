@@ -72,7 +72,7 @@ interface Slide {
       paddingLeft:15
     },
     image: {
-      width: 200,
+      width: 235,
       height: 120,
       borderRadius: 10,
     },
