@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Touchable, TouchableOpacity } from 'react-native';
 import { firestore } from '@/config//FireBaseConfig'; // Ensure the path is correct
 import { collection, getDocs } from 'firebase/firestore';
+import {useRouter } from 'expo-router';
 
 interface Category {
   name: string;
@@ -11,7 +12,7 @@ interface Category {
 const Categories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const router=useRouter();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,12 +57,11 @@ const Categories = () => {
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => (
         <View style={styles.category}>
-         <TouchableOpacity>
+         <TouchableOpacity onPress={()=>router.push('/businessList/'+ item.name)}>
           <Image source={{ uri: item.iconLink }} style={styles.icon} />
           <Text style={styles.name}>{item.name}</Text>
           </TouchableOpacity>
-        </View>
-        
+        </View>  
       )}
     />
     {/* </TouchableOpacity> */}

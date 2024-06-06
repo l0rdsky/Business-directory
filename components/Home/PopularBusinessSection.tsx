@@ -78,6 +78,7 @@
 //   }
 // });
 
+import { Colors } from '@/constants/Colors';
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -188,8 +189,12 @@ const styles = StyleSheet.create({
   },
   category: {
     fontSize: 14,
-    color: 'gray',
+    color: 'white',
     fontFamily:'outfit-medium',
+    backgroundColor:Colors.PRIMARY,
+    borderRadius:5,
+    padding:2,
+    paddingHorizontal:7
   },
   container: {
     marginVertical: 7,
