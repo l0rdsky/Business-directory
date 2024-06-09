@@ -12,6 +12,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "src/**/*.png" // Include the directory where your PNG images are located
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "./images.d.ts" // Include the path to your image declaration file
   ]
 }

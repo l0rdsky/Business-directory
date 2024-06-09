@@ -6,7 +6,8 @@ import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors } from '@/constants/Colors';
 import { useUser } from '@clerk/clerk-expo';
-
+import { useNavigation } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
 interface Business {
   id: string;
   name: string;
@@ -27,6 +28,7 @@ interface Review {
 }
 
 const BusinessDetailsScreen: React.FC = () => {
+  const navigation=useNavigation()
   const { businessid } = useLocalSearchParams<{ businessid: string }>();
   const { user } = useUser();
   const [business, setBusiness] = useState<Business | null>(null);
@@ -35,6 +37,11 @@ const BusinessDetailsScreen: React.FC = () => {
   const [comment, setComment] = useState('');
 
   useEffect(() => {
+      navigation.setOptions({
+          headerShown:true,
+          headerTitle: "Details"
+        })
+
     const fetchBusinessDetails = async () => {
       try {
         if (businessid) { // Check if businessid is defined
@@ -93,13 +100,15 @@ const BusinessDetailsScreen: React.FC = () => {
         <Text style={styles.name}>{business.name}</Text>
         <Text style={styles.address}>{business.address}</Text>
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={()=> Linking.openURL(`tel:${business.contact}`)}>
             <Ionicons name="call" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button}  onPress={()=> {
+             const encodedAddress = encodeURIComponent(business.address);
+            Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`)}}>
             <Ionicons name="location" size={24} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button}  onPress={()=> Linking.openURL(business.website)}>
             <Ionicons name="globe" size={24} color="black" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
